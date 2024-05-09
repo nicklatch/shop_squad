@@ -1,0 +1,29 @@
+<.header>
+  Repair orders <%= @repair_orders.id %>
+  <:subtitle>This is a repair_orders record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/repair_orders/#{@repair_orders}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit repair_orders</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Closed"><%= @repair_orders.closed %></:item>
+  <:item title="Status"><%= @repair_orders.status %></:item>
+  <:item title="Total dollars"><%= @repair_orders.total_dollars %></:item>
+  <:item title="Total cents"><%= @repair_orders.total_cents %></:item>
+</.list>
+
+<.back navigate={~p"/repair_orders"}>Back to repair_orders</.back>
+
+<.modal :if={@live_action == :edit} id="repair_orders-modal" show on_cancel={JS.patch(~p"/repair_orders/#{@repair_orders}")}>
+  <.live_component
+    module={ShopSquadWeb.RepairOrdersLive.FormComponent}
+    id={@repair_orders.id}
+    title={@page_title}
+    action={@live_action}
+    repair_orders={@repair_orders}
+    patch={~p"/repair_orders/#{@repair_orders}"}
+  />
+</.modal>

@@ -80,6 +80,12 @@ defmodule ShopSquadWeb.Router do
       live "/trucks/:id/edit", TruckLive.Index, :edit
       live "/trucks/:id", TruckLive.Show, :show
       live "/trucks/:id/show/edit", TruckLive.Show, :edit
+
+      live "/repair_orders", RepairOrdersLive.Index, :index
+      live "/repair_orders/new", RepairOrdersLive.Index, :new
+      live "/repair_orders/:id/edit", RepairOrdersLive.Index, :edit
+      live "/repair_orders/:id", RepairOrdersLive.Show, :show
+      live "/repair_orders/:id/show/edit", RepairOrdersLive.Show, :edit
     end
   end
 
