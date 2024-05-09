@@ -17,11 +17,11 @@ defmodule ShopSquadWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", ShopSquadWeb do
-    pipe_through :browser
+  # scope "/", ShopSquadWeb do
+  #   pipe_through :browser
 
-    get "/", PageController, :home
-  end
+  #   get "/", PageController, :home
+  # end
 
   # Other scopes may use custom stacks.
   # scope "/api", ShopSquadWeb do
@@ -50,6 +50,8 @@ defmodule ShopSquadWeb.Router do
   scope "/", ShopSquadWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
+    get "/", PageController, :home
+
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{ShopSquadWeb.UserAuth, :redirect_if_user_is_authenticated}] do
       live "/users/register", UserRegistrationLive, :new
@@ -66,6 +68,8 @@ defmodule ShopSquadWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{ShopSquadWeb.UserAuth, :ensure_authenticated}] do
+      live "/home", HomeLive
+
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
 

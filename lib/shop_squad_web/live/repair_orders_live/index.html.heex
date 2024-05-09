@@ -13,15 +13,22 @@
   row_click={fn {_id, repair_orders} -> JS.navigate(~p"/repair_orders/#{repair_orders}") end}
 >
   <:col :let={{_id, repair_orders}} label="Closed"><%= repair_orders.closed %></:col>
+
   <:col :let={{_id, repair_orders}} label="Status"><%= repair_orders.status %></:col>
-  <:col :let={{_id, repair_orders}} label="Total dollars"><%= repair_orders.total_dollars %></:col>
+
+  <:col :let={{_id, repair_orders}} label="Total dollars">
+    <%= repair_orders.total_dollars %>
+  </:col>
+
   <:col :let={{_id, repair_orders}} label="Total cents"><%= repair_orders.total_cents %></:col>
+
   <:action :let={{_id, repair_orders}}>
     <div class="sr-only">
       <.link navigate={~p"/repair_orders/#{repair_orders}"}>Show</.link>
     </div>
-    <.link patch={~p"/repair_orders/#{repair_orders}/edit"}>Edit</.link>
+     <.link patch={~p"/repair_orders/#{repair_orders}/edit"}>Edit</.link>
   </:action>
+
   <:action :let={{id, repair_orders}}>
     <.link
       phx-click={JS.push("delete", value: %{id: repair_orders.id}) |> hide("##{id}")}
@@ -32,7 +39,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="repair_orders-modal" show on_cancel={JS.patch(~p"/repair_orders")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="repair_orders-modal"
+  show
+  on_cancel={JS.patch(~p"/repair_orders")}
+>
   <.live_component
     module={ShopSquadWeb.RepairOrdersLive.FormComponent}
     id={@repair_orders.id || :new}

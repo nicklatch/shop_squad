@@ -6,7 +6,8 @@ defmodule ShopSquadWeb.CustomerLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :customers, Customers.list_customers())}
+    {:ok,
+     stream(socket |> assign(:current_page, "Customer"), :customers, Customers.list_customers())}
   end
 
   @impl true
