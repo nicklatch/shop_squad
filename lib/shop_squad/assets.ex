@@ -35,12 +35,16 @@ defmodule ShopSquad.Assets do
       ** (Ecto.NoResultsError)
 
   """
-  def get_truck!(id), do: Repo.get!(Truck, id)
+  def get_truck!(id) do
+    Repo.get!(Truck, id)
+    |> Repo.preload(
+      customer:
+        from(c in ShopSquad.Customers.Customer,
+          select: c.name
+        )
+    )
+  end
 
-  @spec create_truck(
-          :invalid
-          | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
-        ) :: any()
   @doc """
   Creates a truck.
 
