@@ -21,6 +21,11 @@ defmodule ShopSquad.Customers do
     Repo.all(Customer)
   end
 
+  def get_customer_options do
+    from(c in Customer, select: {c.name, c.id})
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single customer.
 

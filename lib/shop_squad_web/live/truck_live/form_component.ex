@@ -26,6 +26,7 @@ defmodule ShopSquadWeb.TruckLive.FormComponent do
         <.input field={@form[:model]} type="text" label="Model" />
         <.input field={@form[:odometer]} type="number" label="Odometer" />
         <.input field={@form[:engine_hours]} type="number" label="Engine hours" />
+        <.input field={@form[:customer_id]} type="select" label="Owner" options={@owner_opts} />
         <:actions>
           <.button phx-disable-with="Saving...">Save Truck</.button>
         </:actions>
@@ -42,8 +43,11 @@ defmodule ShopSquadWeb.TruckLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign(:make_opts, Ecto.Enum.mappings(ShopSquad.Assets.Truck, :make))
+     |> assign(:owner_opts, owner_opts())
      |> assign_form(changeset)}
   end
+
+  defp owner_opts, do: ShopSquad.Customers.get_customer_options()
 
   @impl true
   def handle_event("validate", %{"truck" => truck_params}, socket) do
