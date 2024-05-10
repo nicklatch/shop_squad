@@ -6,7 +6,7 @@ defmodule ShopSquadWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
+    <div class="max-w-sm mx-auto">
       <.header class="text-center">
         Register for an account
         <:subtitle>
@@ -50,7 +50,7 @@ defmodule ShopSquadWeb.UserRegistrationLive do
       |> assign(trigger_submit: false, check_errors: false)
       |> assign_form(changeset)
 
-    {:ok, socket, temporary_assigns: [form: nil]}
+    {:ok, socket, temporary_assigns: [form: nil], layout: false}
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
