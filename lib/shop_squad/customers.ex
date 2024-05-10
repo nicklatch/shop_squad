@@ -21,6 +21,11 @@ defmodule ShopSquad.Customers do
     Repo.all(Customer)
   end
 
+  def get_customer_options do
+    from(c in Customer, select: {c.name, c.id})
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single customer.
 
@@ -36,6 +41,10 @@ defmodule ShopSquad.Customers do
 
   """
   def get_customer!(id), do: Repo.get!(Customer, id)
+
+  def get_customer_trucks() do
+    Repo.all(from c in Customer, preload: [:trucks])
+  end
 
   @doc """
   Creates a customer.

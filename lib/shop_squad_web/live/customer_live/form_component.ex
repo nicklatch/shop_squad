@@ -18,17 +18,18 @@ defmodule ShopSquadWeb.CustomerLive.FormComponent do
         phx-target={@myself}
         phx-change="validate"
         phx-submit="save"
+        class="text-white"
       >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:address_one]} type="text" label="Address one" />
-        <.input field={@form[:address_two]} type="text" label="Address two" />
-        <.input field={@form[:city]} type="text" label="City" />
+        <.input field={@form[:name]} type="text" label="Name" class="text-gray-200 underline" />
+        <.input field={@form[:address_one]} type="text" label="Address one" class="text-gray-200" />
+        <.input field={@form[:address_two]} type="text" label="Address two" class="text-gray-200" />
+        <.input field={@form[:city]} type="text" label="City" class="text-gray-200" />
         <.input field={@form[:state]} type="text" label="State" />
-        <.input field={@form[:postal_code]} type="number" label="Postal code" />
-        <.input field={@form[:country]} type="text" label="Country" />
-        <.input field={@form[:email]} type="text" label="Email" />
-        <.input field={@form[:phone]} type="text" label="Phone" />
-        <.input field={@form[:extension]} type="text" label="Extension" />
+        <.input field={@form[:postal_code]} type="number" label="Postal code" class="text-gray-200" />
+        <.input field={@form[:country]} type="text" label="Country" class="text-gray-200" />
+        <.input field={@form[:email]} type="text" label="Email" class="text-gray-200" />
+        <.input field={@form[:phone]} type="text" label="Phone" class="text-gray-200" />
+        <.input field={@form[:extension]} type="text" label="Extension" class="text-gray-200" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Customer</.button>
         </:actions>

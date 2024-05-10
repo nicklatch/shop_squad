@@ -1,29 +1,45 @@
 <.header>
-  Customer <%= @customer.id %>
-  <:subtitle>This is a customer record from your database.</:subtitle>
+  <%= @customer.name %> | Account ID: <%= @customer.id %>
   <:actions>
     <.link patch={~p"/customers/#{@customer}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit customer</.button>
+      <.button>Edit <%= @customer.name %></.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Name"><%= @customer.name %></:item>
-  <:item title="Address one"><%= @customer.address_one %></:item>
-  <:item title="Address two"><%= @customer.address_two %></:item>
+  <:item title="Address"><%= @customer.address_one %> <%= @customer.address_two %></:item>
+
   <:item title="City"><%= @customer.city %></:item>
+
   <:item title="State"><%= @customer.state %></:item>
+
   <:item title="Postal code"><%= @customer.postal_code %></:item>
+
   <:item title="Country"><%= @customer.country %></:item>
+
   <:item title="Email"><%= @customer.email %></:item>
-  <:item title="Phone"><%= @customer.phone %></:item>
-  <:item title="Extension"><%= @customer.extension %></:item>
+
+  <:item title="Phone">
+    <%= @customer.phone %>
+    <%= if @customer.extension do %>
+      Ext: <%= @customer.extension %>
+    <% end %>
+  </:item>
 </.list>
+ <br />
+<p class="font-bold text-red-600">
+  TODO: Still needs list of trucks and list of cases
+</p>
 
 <.back navigate={~p"/customers"}>Back to customers</.back>
 
-<.modal :if={@live_action == :edit} id="customer-modal" show on_cancel={JS.patch(~p"/customers/#{@customer}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="customer-modal"
+  show
+  on_cancel={JS.patch(~p"/customers/#{@customer}")}
+>
   <.live_component
     module={ShopSquadWeb.CustomerLive.FormComponent}
     id={@customer.id}

@@ -28,7 +28,16 @@ defmodule ShopSquad.Assets.Truck do
   @doc false
   def changeset(truck, attrs) do
     truck
-    |> cast(attrs, [:vin, :unit_number, :model_year, :make, :model, :odometer, :engine_hours])
+    |> cast(attrs, [
+      :vin,
+      :unit_number,
+      :model_year,
+      :make,
+      :model,
+      :odometer,
+      :engine_hours,
+      :customer_id
+    ])
     |> validate_required([
       :vin,
       :model_year,
@@ -36,7 +45,8 @@ defmodule ShopSquad.Assets.Truck do
       :model,
       :odometer
     ])
-    |> valdiate_model_year()
+    |> validate_vin()
+    |> validate_model_year()
     |> unique_constraint(:vin)
   end
 
@@ -44,13 +54,17 @@ defmodule ShopSquad.Assets.Truck do
   Validates the model year of the given changeset.
 
   Truck model years (MY) are always build year + 1.
-  So, a truck with a build year of 2024 is a 2025 model year.
+  i.e. A truck with a build year of 2024 is an MY2025.
   """
-  @spec valdiate_model_year(Ecto.Changeset.t()) :: Ecto.Changeset.t()
-  def valdiate_model_year(truck) do
+  def validate_model_year(truck) do
     truck
     |> validate_inclusion(:model_year, 1932..(current_year() + 1))
   end
 
   defp current_year, do: Date.utc_today().year
+
+  def validate_vin(truck) do
+    truck
+    |> validate_length(:vin, is: 17)
+  end
 end

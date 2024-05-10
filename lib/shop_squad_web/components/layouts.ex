@@ -9,6 +9,7 @@ defmodule ShopSquadWeb.Layouts do
   `use ShopSquadWeb, :live_view`.
   """
   use ShopSquadWeb, :html
+  import ShopSquadWeb.NavComponents
 
   embed_templates "layouts/*"
 end

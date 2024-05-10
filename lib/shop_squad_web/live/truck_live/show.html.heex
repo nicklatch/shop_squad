@@ -1,40 +1,56 @@
 <.header>
-  Truck <%= @truck.id %>
-    <:subtitle>This is a truck record from your database.</:subtitle>
-    <:actions>
-      <.link patch={~p"/trucks/#{@truck}/show/edit"} phx-click={JS.push_focus()}>
-        <.button>Edit truck</.button>
-      </.link>
-    </:actions>
+  <%= @truck.customer %> | <%= @truck.vin %>
+  <:actions>
+    <.link patch={~p"/trucks/#{@truck}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit truck</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.list>
-  <:item title="Vin">
-    <%= @truck.vin %>
-  </:item>
   <:item title="Unit number">
     <%= @truck.unit_number %>
   </:item>
+
   <:item title="Model year">
     <%= @truck.model_year %>
   </:item>
+
   <:item title="Make">
     <%= Ecto.Enum.mappings(ShopSquad.Assets.Truck, :make)[@truck.make] %>
   </:item>
+
   <:item title="Model">
     <%= @truck.model %>
   </:item>
+
   <:item title="Odometer">
     <%= @truck.odometer %>
   </:item>
+
   <:item title="Engine hours">
     <%= @truck.engine_hours %>
   </:item>
 </.list>
+ <br />
+<p class="font-bold text-red-600">
+  TODO: Still needs list of repair history/current ROs
+</p>
 
 <.back navigate={~p"/trucks"}>Back to trucks</.back>
 
-<.modal :if={@live_action==:edit} id="truck-modal" show on_cancel={JS.patch(~p"/trucks/#{@truck}")}>
-  <.live_component module={ShopSquadWeb.TruckLive.FormComponent} id={@truck.id} title={@page_title}
-    action={@live_action} truck={@truck} patch={~p"/trucks/#{@truck}"} />
+<.modal
+  :if={@live_action == :edit}
+  id="truck-modal"
+  show
+  on_cancel={JS.patch(~p"/trucks/#{@truck}")}
+>
+  <.live_component
+    module={ShopSquadWeb.TruckLive.FormComponent}
+    id={@truck.id}
+    title={@page_title}
+    action={@live_action}
+    truck={@truck}
+    patch={~p"/trucks/#{@truck}"}
+  />
 </.modal>
