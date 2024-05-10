@@ -37,6 +37,10 @@ defmodule ShopSquad.Assets do
   """
   def get_truck!(id), do: Repo.get!(Truck, id)
 
+  @spec create_truck(
+          :invalid
+          | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
+        ) :: any()
   @doc """
   Creates a truck.
 

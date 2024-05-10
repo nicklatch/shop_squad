@@ -42,6 +42,10 @@ defmodule ShopSquad.Customers do
   """
   def get_customer!(id), do: Repo.get!(Customer, id)
 
+  def get_customer_trucks() do
+    Repo.all(from c in Customer, preload: [:trucks])
+  end
+
   @doc """
   Creates a customer.
 

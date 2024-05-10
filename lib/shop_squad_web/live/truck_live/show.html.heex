@@ -30,6 +30,9 @@
   <:item title="Engine hours">
     <%= @truck.engine_hours %>
   </:item>
+  <:item title="Owner">
+    <%= @truck.customer_id %>
+  </:item>
 </.list>
 
 <.back navigate={~p"/trucks"}>Back to trucks</.back>
