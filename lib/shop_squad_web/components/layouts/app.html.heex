@@ -1,43 +1,41 @@
 <div class="grid w-full h-full grid-cols-[auto_1fr_1fr]">
-  <nav class="flex flex-col justify-between col-span-1 p-2 border-r-2 rounded-md">
-    <div>
-      <.link navigate={~p"/home"} class="text-4xl">SHOPSQUAD</.link>
-      <ul class="flex flex-col gap-6 pt-6">
-        <%= for {route, title} <- [repair_orders: "Repair Orders", customers: "Customers", trucks: "Trucks"] do %>
-          <li class="text-black border-b-2">
-            <.side_nav_link route={~p"/#{route}"} link_text={title} />
-          </li>
-        <% end %>
+  <%= if @current_user do %>
+    <nav class="flex flex-col justify-between col-span-1 p-2 border-r-2 rounded-md">
+      <div>
+        <.link navigate={~p"/home"} class="text-4xl">SHOPSQUAD</.link>
+        <ul class="flex flex-col gap-6 pt-6">
+          <%= for {route, title} <- [repair_orders: "Repair Orders" , customers: "Customers" , trucks: "Trucks" ] do %>
+            <li class="text-black border-b-2">
+              <.side_nav_link route={~p"/#{route}"} link_text={title} />
+            </li>
+            <% end %>
+        </ul>
+      </div>
+
+      <ul class="relative z-10 flex flex-col items-center justify-end gap-4 px-4 sm:px-6 lg:px-8">
+
+        <li class="text-[0.8125rem] leading-6 text-zinc-900">
+          <%= @current_user.email %>
+        </li>
+
+        <li>
+          <.link href={~p"/users/settings"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700">
+            Settings
+          </.link>
+        </li>
+
+        <li>
+          <.link href={~p"/users/log_out"} method="delete"
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700">
+            Log out
+          </.link>
+        </li>
       </ul>
-    </div>
-
-    <ul class="relative z-10 flex flex-col items-center justify-end gap-4 px-4 sm:px-6 lg:px-8">
-      <li class="text-[0.8125rem] leading-6 text-zinc-900">
-        <%= @current_user.email %>
-      </li>
-
-      <li>
-        <.link
-          href={~p"/users/settings"}
-          class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-        >
-          Settings
-        </.link>
-      </li>
-
-      <li>
-        <.link
-          href={~p"/users/log_out"}
-          method="delete"
-          class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-        >
-          Log out
-        </.link>
-      </li>
-    </ul>
-  </nav>
-
-  <main class="col-span-2 p-2">
-    <.flash_group flash={@flash} /> <%= @inner_content %>
-  </main>
+    </nav>
+    <% end %>
+      <main class="col-span-2 p-2 w-full mx-auto">
+        <.flash_group flash={@flash} />
+        <%= @inner_content %>
+      </main>
 </div>
