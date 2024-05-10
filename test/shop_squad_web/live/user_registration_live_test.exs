@@ -17,7 +17,7 @@ defmodule ShopSquadWeb.UserRegistrationLiveTest do
         conn
         |> log_in_user(user_fixture())
         |> live(~p"/users/register")
-        |> follow_redirect(conn, "/")
+        |> follow_redirect(conn, "/home")
 
       assert {:ok, _conn} = result
     end
@@ -45,11 +45,11 @@ defmodule ShopSquadWeb.UserRegistrationLiveTest do
       render_submit(form)
       conn = follow_trigger_action(form, conn)
 
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/home"
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
-      response = html_response(conn, 200)
+      response = html_response(conn, 302)
       assert response =~ email
       assert response =~ "Settings"
       assert response =~ "Log out"
@@ -77,7 +77,7 @@ defmodule ShopSquadWeb.UserRegistrationLiveTest do
 
       {:ok, _login_live, login_html} =
         lv
-        |> element(~s|main a:fl-contains("Log in")|)
+        |> element(~s|a:fl-contains("Log in")|)
         |> render_click()
         |> follow_redirect(conn, ~p"/users/log_in")
 

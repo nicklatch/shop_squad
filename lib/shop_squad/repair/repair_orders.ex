@@ -18,6 +18,6 @@ defmodule ShopSquad.Repair.RepairOrders do
   def changeset(repair_orders, attrs) do
     repair_orders
     |> cast(attrs, [:closed, :status, :total_dollars, :total_cents])
-    |> validate_required([:status, :total_dollars, :total_cents])
+    |> validate_required([:status])
   end
 end

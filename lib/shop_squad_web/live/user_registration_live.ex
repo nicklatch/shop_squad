@@ -6,7 +6,7 @@ defmodule ShopSquadWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-sm mx-auto">
+    <div class="relative max-w-sm mx-auto top-[25%]">
       <.header class="text-center">
         Register for an account
         <:subtitle>
@@ -30,10 +30,8 @@ defmodule ShopSquadWeb.UserRegistrationLive do
         <.error :if={@check_errors}>
           Oops, something went wrong! Please check the errors below.
         </.error>
-
-        <.input field={@form[:email]} type="email" label="Email" required />
+         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
-
         <:actions>
           <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
         </:actions>
@@ -50,7 +48,7 @@ defmodule ShopSquadWeb.UserRegistrationLive do
       |> assign(trigger_submit: false, check_errors: false)
       |> assign_form(changeset)
 
-    {:ok, socket, temporary_assigns: [form: nil], layout: false}
+    {:ok, socket, temporary_assigns: [form: nil]}
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do

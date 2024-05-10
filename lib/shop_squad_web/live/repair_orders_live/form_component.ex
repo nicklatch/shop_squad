@@ -19,8 +19,10 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:closed]} type="datetime-local" label="Closed" />
-        <.input field={@form[:status]} type="text" label="Status" />
+        <%= if String.contains?(@title, "Edit") do %>
+          <.input field={@form[:closed]} type="datetime-local" label="Closed" />
+        <% end %>
+         <.input field={@form[:status]} type="select" label="Status" options={@status_opts} />
         <.input field={@form[:total_dollars]} type="number" label="Total dollars" />
         <.input field={@form[:total_cents]} type="number" label="Total cents" />
         <:actions>
@@ -38,6 +40,7 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:status_opts, Ecto.Enum.mappings(ShopSquad.Repair.RepairOrders, :status))
      |> assign_form(changeset)}
   end
 

@@ -8,6 +8,9 @@ defmodule ShopSquad.AssetsTest do
 
     import ShopSquad.AssetsFixtures
 
+    @some_vin "1XKYDP9X2RJ360169"
+    @some_updated_vin "1XKYDP9X2RJ360171"
+
     @invalid_attrs %{
       make: nil,
       vin: nil,
@@ -24,14 +27,17 @@ defmodule ShopSquad.AssetsTest do
     end
 
     test "get_truck!/1 returns the truck with given id" do
-      truck = truck_fixture()
+      truck =
+        truck_fixture()
+        |> Map.update!(:customer, fn _ -> nil end)
+
       assert Assets.get_truck!(truck.id) == truck
     end
 
     test "create_truck/1 with valid data creates a truck" do
       valid_attrs = %{
         make: :Volvo,
-        vin: "some vin",
+        vin: @some_vin,
         unit_number: "some unit_number",
         model_year: 2021,
         model: "some model",
@@ -41,7 +47,7 @@ defmodule ShopSquad.AssetsTest do
 
       assert {:ok, %Truck{} = truck} = Assets.create_truck(valid_attrs)
       assert truck.make == :Volvo
-      assert truck.vin == "some vin"
+      assert truck.vin == @some_vin
       assert truck.unit_number == "some unit_number"
       assert truck.model_year == 2021
       assert truck.model == "some model"
@@ -54,11 +60,13 @@ defmodule ShopSquad.AssetsTest do
     end
 
     test "update_truck/2 with valid data updates the truck" do
-      truck = truck_fixture()
+      truck =
+        truck_fixture()
+        |> Map.update!(:customer, fn _ -> nil end)
 
       update_attrs = %{
         make: :Peterbilt,
-        vin: "some updated vin",
+        vin: @some_updated_vin,
         unit_number: "some updated unit_number",
         model_year: 2024,
         model: "579",
@@ -68,7 +76,7 @@ defmodule ShopSquad.AssetsTest do
 
       assert {:ok, %Truck{} = truck} = Assets.update_truck(truck, update_attrs)
       assert truck.make == :Peterbilt
-      assert truck.vin == "some updated vin"
+      assert truck.vin == @some_updated_vin
       assert truck.unit_number == "some updated unit_number"
       assert truck.model_year == 2024
       assert truck.model == "579"
@@ -77,19 +85,28 @@ defmodule ShopSquad.AssetsTest do
     end
 
     test "update_truck/2 with invalid data returns error changeset" do
-      truck = truck_fixture()
+      truck =
+        truck_fixture()
+        |> Map.update!(:customer, fn _ -> nil end)
+
       assert {:error, %Ecto.Changeset{}} = Assets.update_truck(truck, @invalid_attrs)
       assert truck == Assets.get_truck!(truck.id)
     end
 
     test "delete_truck/1 deletes the truck" do
-      truck = truck_fixture()
+      truck =
+        truck_fixture()
+        |> Map.update!(:customer, fn _ -> nil end)
+
       assert {:ok, %Truck{}} = Assets.delete_truck(truck)
       assert_raise Ecto.NoResultsError, fn -> Assets.get_truck!(truck.id) end
     end
 
     test "change_truck/1 returns a truck changeset" do
-      truck = truck_fixture()
+      truck =
+        truck_fixture()
+        |> Map.update!(:customer, fn _ -> nil end)
+
       assert %Ecto.Changeset{} = Assets.change_truck(truck)
     end
   end

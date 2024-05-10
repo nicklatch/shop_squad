@@ -21,11 +21,16 @@ defmodule ShopSquad.RepairTest do
     end
 
     test "create_repair_orders/1 with valid data creates a repair_orders" do
-      valid_attrs = %{closed: ~U[2024-05-08 02:03:00Z], status: "some status", total_dollars: 42, total_cents: 42}
+      valid_attrs = %{
+        closed: ~U[2024-05-08 02:03:00Z],
+        status: :Yard,
+        total_dollars: 42,
+        total_cents: 42
+      }
 
       assert {:ok, %RepairOrders{} = repair_orders} = Repair.create_repair_orders(valid_attrs)
       assert repair_orders.closed == ~U[2024-05-08 02:03:00Z]
-      assert repair_orders.status == "some status"
+      assert repair_orders.status == :Yard
       assert repair_orders.total_dollars == 42
       assert repair_orders.total_cents == 42
     end
@@ -36,18 +41,29 @@ defmodule ShopSquad.RepairTest do
 
     test "update_repair_orders/2 with valid data updates the repair_orders" do
       repair_orders = repair_orders_fixture()
-      update_attrs = %{closed: ~U[2024-05-09 02:03:00Z], status: "some updated status", total_dollars: 43, total_cents: 43}
 
-      assert {:ok, %RepairOrders{} = repair_orders} = Repair.update_repair_orders(repair_orders, update_attrs)
+      update_attrs = %{
+        closed: ~U[2024-05-09 02:03:00Z],
+        status: "Yard",
+        total_dollars: 43,
+        total_cents: 43
+      }
+
+      assert {:ok, %RepairOrders{} = repair_orders} =
+               Repair.update_repair_orders(repair_orders, update_attrs)
+
       assert repair_orders.closed == ~U[2024-05-09 02:03:00Z]
-      assert repair_orders.status == "some updated status"
+      assert Atom.to_string(repair_orders.status) == "Yard"
       assert repair_orders.total_dollars == 43
       assert repair_orders.total_cents == 43
     end
 
     test "update_repair_orders/2 with invalid data returns error changeset" do
       repair_orders = repair_orders_fixture()
-      assert {:error, %Ecto.Changeset{}} = Repair.update_repair_orders(repair_orders, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Repair.update_repair_orders(repair_orders, @invalid_attrs)
+
       assert repair_orders == Repair.get_repair_orders!(repair_orders.id)
     end
 

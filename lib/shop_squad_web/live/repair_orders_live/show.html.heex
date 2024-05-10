@@ -8,7 +8,7 @@
   </:actions>
 </.header>
 
-<.list>
+<.list id="#repair_orders-#{@repair_orders.id}">
   <:item title="Closed"><%= @repair_orders.closed %></:item>
   <:item title="Status"><%= @repair_orders.status %></:item>
   <:item title="Total dollars"><%= @repair_orders.total_dollars %></:item>

@@ -12,7 +12,7 @@ defmodule ShopSquad.RepairFixtures do
       attrs
       |> Enum.into(%{
         closed: ~U[2024-05-08 02:03:00Z],
-        status: "some status",
+        status: :Repair,
         total_cents: 42,
         total_dollars: 42
       })
@@ -20,4 +20,6 @@ defmodule ShopSquad.RepairFixtures do
 
     repair_orders
   end
+
+
 end
