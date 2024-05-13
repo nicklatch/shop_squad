@@ -54,7 +54,7 @@ defmodule ShopSquadWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{ShopSquadWeb.UserAuth, :redirect_if_user_is_authenticated}],
-      layout: false do
+      layout: {ShopSquadWeb.Layouts, :auth} do
       live "/users/register", UserRegistrationLive, :new
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
