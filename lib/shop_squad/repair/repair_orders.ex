@@ -5,11 +5,12 @@ defmodule ShopSquad.Repair.RepairOrders do
   schema "repair_orders" do
     field :closed, :utc_datetime
     field :status, Ecto.Enum, values: [:Yard, :Repair, :AuthHold, :PartsHold, :Complete]
-    field :total_dollars, :integer
-    field :total_cents, :integer
+    field :total, :decimal
 
     belongs_to :customer, ShopSquad.Customers.Customer
     belongs_to :truck, ShopSquad.Assets.Truck
+
+    has_many :repair_order_lines, ShopSquad.Repair.RepairOrderLine
 
     timestamps(type: :utc_datetime)
   end
@@ -17,7 +18,7 @@ defmodule ShopSquad.Repair.RepairOrders do
   @doc false
   def changeset(repair_orders, attrs) do
     repair_orders
-    |> cast(attrs, [:closed, :status, :total_dollars, :total_cents])
-    |> validate_required([:status])
+    |> cast(attrs, [:closed, :status, :total])
+    |> validate_required([:status, :total])
   end
 end

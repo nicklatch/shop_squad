@@ -6,16 +6,14 @@ defmodule ShopSquadWeb.RepairOrdersLiveTest do
 
   @create_attrs %{
     status: :Yard,
-    total_dollars: 42,
-    total_cents: 42
+    total: Decimal.new("0.0")
   }
   @update_attrs %{
     closed: "2024-05-09T02:03:00Z",
     status: :Repair,
-    total_dollars: 43,
-    total_cents: 43
+    total: Decimal.new("43.00")
   }
-  @invalid_attrs %{closed: nil, status: nil, total_dollars: nil, total_cents: nil}
+  @invalid_attrs %{closed: nil, status: nil, total: nil}
 
   defp create_repair_orders(_) do
     repair_orders = repair_orders_fixture()

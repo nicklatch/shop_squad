@@ -22,9 +22,8 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
         <%= if String.contains?(@title, "Edit") do %>
           <.input field={@form[:closed]} type="datetime-local" label="Closed" />
         <% end %>
-         <.input field={@form[:status]} type="select" label="Status" options={@status_opts} />
-        <.input field={@form[:total_dollars]} type="number" label="Total dollars" />
-        <.input field={@form[:total_cents]} type="number" label="Total cents" />
+        <.input field={@form[:status]} type="select" label="Status" options={@status_opts} />
+        <.input field={@form[:total]} type="number" label="Total" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Repair orders</.button>
         </:actions>
