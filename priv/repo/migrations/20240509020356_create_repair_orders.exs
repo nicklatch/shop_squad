@@ -17,3 +17,6 @@ defmodule ShopSquad.Repo.Migrations.CreateRepairOrders do
     create index(:repair_orders, [:truck_id])
   end
 end
+
+# TODO: gen migration to add hours and milage
+#mix ecto.get
