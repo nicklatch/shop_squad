@@ -21,6 +21,10 @@ defmodule ShopSquad.Assets do
     Repo.all(Truck)
   end
 
+  def list_truck_ids_and_vins do
+    Repo.all(from(t in Truck, select: {t.vin, t.id}))
+  end
+
   @doc """
   Gets a single truck.
 
@@ -43,6 +47,19 @@ defmodule ShopSquad.Assets do
           select: c.name
         )
     )
+  end
+
+  @doc """
+  TODO: asdaf
+  """
+  def get_trucks_by_customer_id(id) do
+    query =
+      from(t in Truck,
+        where: t.customer_id == ^id,
+        select: [t.id, t.vin]
+      )
+
+    Repo.all(query)
   end
 
   @doc """

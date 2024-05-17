@@ -2,6 +2,8 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
   use ShopSquadWeb, :live_component
 
   alias ShopSquad.Repair
+  alias ShopSquad.Customers
+  alias ShopSquad.Assets
 
   @impl true
   def render(assigns) do
@@ -19,11 +21,18 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={@form[:status]} type="select" label="Status" options={@status_opts} />
         <%= if String.contains?(@title, "Edit") do %>
           <.input field={@form[:closed]} type="datetime-local" label="Closed" />
+          <.input field={@form[:total]} type="number" label="Total" disabled />
         <% end %>
-        <.input field={@form[:status]} type="select" label="Status" options={@status_opts} />
-        <.input field={@form[:total]} type="number" label="Total" />
+        <%= if !String.contains?(@title, "Edit")do %>
+          <.input field={@form[:customer_id]} type="select" label="Customer" options={@customer_opts} />
+          <.input field={@form[:truck_id]} type="select" label="Truck" options={@truck_opts} />
+        <% end %>
+        <.input field={@form[:engine_hours]} type="number" label="Engine Hours" />
+        <.input field={@form[:odometer]} type="number" label="Odometer" />
+
         <:actions>
           <.button phx-disable-with="Saving...">Save Repair orders</.button>
         </:actions>
@@ -39,9 +48,15 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:status_opts, Ecto.Enum.mappings(ShopSquad.Repair.RepairOrders, :status))
+     |> assign(:status_opts, Ecto.Enum.mappings(Repair.RepairOrders, :status))
+     |> assign(:customer_opts, customer_opts())
+     |> assign(:truck_opts, truck_opts())
      |> assign_form(changeset)}
   end
+
+  defp customer_opts, do: Customers.get_customer_options()
+
+  defp truck_opts(), do: Assets.list_truck_ids_and_vins()
 
   @impl true
   def handle_event("validate", %{"repair_orders" => repair_orders_params}, socket) do
