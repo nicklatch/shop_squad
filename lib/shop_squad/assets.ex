@@ -53,13 +53,12 @@ defmodule ShopSquad.Assets do
   TODO: asdaf
   """
   def get_trucks_by_customer_id(id) do
-    query =
+    Repo.all(
       from(t in Truck,
         where: t.customer_id == ^id,
-        select: [t.id, t.vin]
+        select: {t.vin, t.id}
       )
-
-    Repo.all(query)
+    )
   end
 
   @doc """

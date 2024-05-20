@@ -57,9 +57,12 @@ defmodule ShopSquadWeb.RepairOrdersLive.FormComponent do
   defp customer_opts, do: Customers.get_customer_options()
 
   defp truck_opts(), do: Assets.list_truck_ids_and_vins()
+  defp truck_opts(id), do: Assets.get_trucks_by_customer_id(id)
 
   @impl true
   def handle_event("validate", %{"repair_orders" => repair_orders_params}, socket) do
+    socket = assign(socket, :truck_opts, truck_opts(repair_orders_params["customer_id"]))
+
     changeset =
       socket.assigns.repair_orders
       |> Repair.change_repair_orders(repair_orders_params)

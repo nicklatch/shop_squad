@@ -78,6 +78,7 @@ defmodule ShopSquadWeb.CoreComponents do
                   <.icon name="hero-x-mark-solid" class="w-5 h-5" />
                 </button>
               </div>
+
               <div id={"#{@id}-content"}>
                 <%= render_slot(@inner_block) %>
               </div>
@@ -123,10 +124,11 @@ defmodule ShopSquadWeb.CoreComponents do
     >
       <p :if={@title} class="flex items-center gap-1.5 text-sm font-semibold leading-6">
         <.icon :if={@kind == :info} name="hero-information-circle-mini" class="w-4 h-4" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="w-4 h-4" />
-        <%= @title %>
+        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="w-4 h-4" /> <%= @title %>
       </p>
+
       <p class="mt-2 text-sm leading-5"><%= msg %></p>
+
       <button type="button" class="absolute p-2 group top-1 right-1" aria-label={gettext("close")}>
         <.icon name="hero-x-mark-solid" class="w-5 h-5 opacity-40 group-hover:opacity-70" />
       </button>
@@ -320,9 +322,9 @@ defmodule ShopSquadWeb.CoreComponents do
           checked={@checked}
           class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
           {@rest}
-        />
-        <%= @label %>
+        /> <%= @label %>
       </label>
+
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
     """
@@ -332,6 +334,7 @@ defmodule ShopSquadWeb.CoreComponents do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
+
       <select
         id={@id}
         name={@name}
@@ -340,8 +343,9 @@ defmodule ShopSquadWeb.CoreComponents do
         {@rest}
       >
         <option :if={@prompt} value=""><%= @prompt %></option>
-        <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
+         <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
       </select>
+
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
     """
@@ -351,7 +355,7 @@ defmodule ShopSquadWeb.CoreComponents do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
-      <textarea
+       <textarea
         id={@id}
         name={@name}
         class={[
@@ -372,6 +376,7 @@ defmodule ShopSquadWeb.CoreComponents do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
+
       <input
         type={@type}
         name={@name}
@@ -412,8 +417,9 @@ defmodule ShopSquadWeb.CoreComponents do
   def error(assigns) do
     ~H"""
     <p class="flex gap-3 mt-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
-      <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
-      <%= render_slot(@inner_block) %>
+      <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" /> <%= render_slot(
+        @inner_block
+      ) %>
     </p>
     """
   end
@@ -434,10 +440,12 @@ defmodule ShopSquadWeb.CoreComponents do
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
         </h1>
+
         <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
           <%= render_slot(@subtitle) %>
         </p>
       </div>
+
       <div class="flex-none"><%= render_slot(@actions) %></div>
     </header>
     """
@@ -480,11 +488,13 @@ defmodule ShopSquadWeb.CoreComponents do
         <thead class="text-sm leading-6 text-left text-zinc-500">
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 pr-2 font-normal"><%= col[:label] %></th>
+
             <th :if={@action != []} class="relative p-0 pb-4">
               <span class="sr-only"><%= gettext("Actions") %></span>
             </th>
           </tr>
         </thead>
+
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
@@ -503,6 +513,7 @@ defmodule ShopSquadWeb.CoreComponents do
                 </span>
               </div>
             </td>
+
             <td :if={@action != []} class="relative p-0 w-14">
               <div class="relative py-4 text-sm font-medium text-right whitespace-nowrap">
                 <span class="absolute left-0 -inset-y-px -right-4 group-hover:bg-zinc-50 sm:rounded-r-xl" />
@@ -541,6 +552,7 @@ defmodule ShopSquadWeb.CoreComponents do
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
           <dt class="flex-none w-1/4 text-zinc-500"><%= item.title %></dt>
+
           <dd class="text-zinc-700"><%= render_slot(item) %></dd>
         </div>
       </dl>
@@ -565,8 +577,7 @@ defmodule ShopSquadWeb.CoreComponents do
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
       >
-        <.icon name="hero-arrow-left-solid" class="w-3 h-3" />
-        <%= render_slot(@inner_block) %>
+        <.icon name="hero-arrow-left-solid" class="w-3 h-3" /> <%= render_slot(@inner_block) %>
       </.link>
     </div>
     """

@@ -49,7 +49,7 @@ defmodule ShopSquad.Assets.Truck do
     |> validate_model_year()
     |> unique_constraint(:vin)
   end
-
+  
   @doc """
   Validates the model year of the given changeset.
 

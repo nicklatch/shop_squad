@@ -15,6 +15,7 @@ defmodule ShopSquad.Customers.Customer do
     field :phone, :string
 
     has_many :trucks, ShopSquad.Assets.Truck
+    has_many :repair_orders, ShopSquad.Repair.RepairOrders
 
     timestamps(type: :utc_datetime)
   end
